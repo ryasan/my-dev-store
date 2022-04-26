@@ -20,5 +20,5 @@ config/tunnel.pid
 # webpack build output
 dist/
 
-# # Miscellaneous
-# .history
+# Miscellaneous
+.history
