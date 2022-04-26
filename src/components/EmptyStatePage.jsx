@@ -1,9 +1,10 @@
+import {useState} from 'react'
 import {Page, Layout, EmptyState} from '@shopify/polaris'
 import {ResourcePicker, TitleBar} from '@shopify/app-bridge-react'
 
 const img = 'https://cdn.shopify.com/s/files/1/0757/9955/files/empty-state.svg'
 
-export default function EmptyStatePage() {
+export default function EmptyStatePage({setSelection}) {
   const [open, setOpen] = useState(false)
   const handleSelection = (resources) => {
     setOpen(false)
@@ -12,19 +13,30 @@ export default function EmptyStatePage() {
 
   return (
     <Page>
+      <TitleBar
+        primaryAction={{
+          content: 'Select products',
+          onAction: () => setOpen(true),
+        }}
+      />
+      <ResourcePicker // Resource picker component
+        resourceType="Product"
+        showVariants={false}
+        open={open}
+        onSelection={(resources) => handleSelection(resources)}
+        onCancel={() => setOpen(false)}
+      />
       <Layout>
-        <Layout.Section>
-          <EmptyState
-            heading="Discount your products temporarily"
-            action={{
-              content: 'Select products',
-              onAction: () => setOpen(true),
-            }}
-            image={img}
-            imageContained>
-            <p>Select products to change their price temporarily.</p>
-          </EmptyState>
-        </Layout.Section>
+        <EmptyState
+          heading="Discount your products temporarily"
+          action={{
+            content: 'Select products',
+            onAction: () => setOpen(true),
+          }}
+          image={img}
+          imageContained>
+          <p>Select products to change their price temporarily.</p>
+        </EmptyState>
       </Layout>
     </Page>
   )
